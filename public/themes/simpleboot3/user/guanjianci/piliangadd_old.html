@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$user_nickname}  - 关键词排名查询</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style>
+	#paiming li {list-style: none; float:left; padding-right:30px;}
+	#shoulu {display:none;}
+</style>
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav" />
+
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li><a href="{:url('user/guanjianci/index')}"><i class="fa fa-building-o"></i> 关键词任务管理</a></li>
+						<li><a href="{:url('user/guanjianci/add')}">添加任务</a></li>
+						<li class="active" data-toggle="tab"><a href="#">关键词排名查询</a></li>
+					</ul>
+					<form action="{:url('user/guanjianci/piliangadd2')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<table class="table table-bordered">
+								<tr>
+									<th width="80">域名</th>
+									<td>
+										<input class="form-control" type="text" name="url" id="url" placeholder="请输入url" required><p class="help-block">例：www.baidu.com</p>
+									</td>
+								</tr>
+								<tr>
+									<th>关键词</th>
+									<td id="jieguo">
+										<textarea name="guanjianci" id="guanjianci" class="form-control" rows="15" required wrap="off"></textarea><p class="help-block">一行一个词</p><!--<a id="chaxun" class="btn btn-primary js-ajax-submit">{:lang('查询')}</a>-->
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<a id="chaxun" class="btn btn-primary js-ajax-submit">{:lang('查询')}</a>
+							<!--<button type="submit" id="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>-->
+							<a class="btn btn-default" href="{:url('user/guanjianci/piliangadd')}">{:lang('清空')}</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+	$(function(){
+	    $('#chaxun').click(function(){
+	        var url=$('#url').val();
+	        if(url.length==0){
+                alert('请填写域名');
+                return false;
+			}
+			var guanjianci=$('#guanjianci').val();
+            if(guanjianci.length==0){
+                alert('请填写关键词');
+                return false;
+            }
+
+	        var str='<table id="list" class="table table-bordered"><thead><tr><th>关键词</th><th width="150">百度排名</th><th width="150">搜狗排名</th><th width="150">360排名</th><!--<th width="100">操作</th>--></tr></thead><tbody>';
+            var con_arr=guanjianci.split("\n");
+            for(var i=0;i<con_arr.length;i++){
+                console.log(con_arr[i].length);
+                if(con_arr[i].length>0){
+                	str+='<tr><td>'+con_arr[i]+'</td><td><img src="__STATIC__/images/loading.gif" width="20" height="20" />';
+                    str+='</td><td><img src="__STATIC__/images/loading.gif" width="20" height="20" /></td><td><img src="__STATIC__/images/loading.gif" width="20" height="20" /></td><!--<td><a href="javascript:;" data-handle="delete">删除</a></td>--></tr>';
+                }
+            }
+            str+='</tbody></table>';
+			$('#jieguo').html(str);
+            for(var j=0;j<con_arr.length;j++) {
+
+                if(con_arr[j].length>0) {
+                    console.log(j);
+                    $.get("/user/guanjianci/paiming/post_title/" + con_arr[j] + "/post_url/" + url + "/ssyq/1/num/"+j+"/sj/" + Math.random(), function (data) {
+                        console.log(data);
+                        var str = data.split(",");
+                        var rank = str[0];
+                        var num = str[1];
+
+
+                            $('#list>tbody').find("tr:eq("+num+")").find("td:eq(1)").html(rank);
+
+                    });
+                    $.get("/user/guanjianci/paiming/post_title/" + con_arr[j] + "/post_url/" + url + "/ssyq/2/num/"+j+"/sj/" + Math.random(), function (data) {
+                        console.log(data);
+                        var str = data.split(",");
+                        var rank = str[0];
+                        var num = str[1];
+
+
+                        $('#list>tbody').find("tr:eq("+num+")").find("td:eq(2)").html(rank);
+
+                    });
+                    $.get("/user/guanjianci/paiming/post_title/" + con_arr[j] + "/post_url/" + url + "/ssyq/3/num/"+j+"/sj/" + Math.random(), function (data) {
+                        console.log(data);
+                        var str = data.split(",");
+                        var rank = str[0];
+                        var num = str[1];
+
+
+                        $('#list>tbody').find("tr:eq("+num+")").find("td:eq(3)").html(rank);
+
+                    });
+                }
+            }
+			return false;
+		});
+        $("body").delegate('a[data-handle=delete]', 'click', function() {
+            $(this).parent().parent().remove();
+        });
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>关键词排名查询</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav" />
+
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li><a href="{:url('user/guanjianci/index')}"><i class="fa fa-building-o"></i> 关键词任务管理</a></li>
+						<!--<li><a href="{:url('user/guanjianci/add')}">添加任务</a></li>-->
+						<li class="active" data-toggle="tab"><a href="#">关键词添加任务</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<table class="table table-bordered">
+								<tr>
+									<th width="80" rowspan="2" style="vertical-align:top;padding-top:15px;">域名</th>
+									<td>
+										<input class="form-control" type="text" name="url" id="url" placeholder="请输入url" required style="width:400px;float:left;margin-right:20px;">
+										<a id="chaxun" class="btn btn-primary js-ajax-submit">{:lang('查询')}</a>
+									</td>
+								</tr>
+								<tr>
+									<td id="jieguo">
+
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+	$(function(){
+
+	    $('#chaxun').click(function() {
+
+            var url = $('#url').val();
+            url=url.replace('http://', '');
+            url=url.replace('https://', '');
+            if (url.length == 0) {
+                alert('请填写域名');
+                return false;
+            }
+            var str = "<img src='__STATIC__/images/loading.gif' width='20' height='20' />";
+            $('#jieguo').html(str);
+            $.ajax({
+				type:"GET",
+				url:'/user/guanjianci/paiming3/post_url/'+url+'/sj/'+Math.random(),
+				async:true,
+                dataType : "json",
+				success:function(json){
+                    console.log(json);
+                    if(json==0){
+                        $("#jieguo").html('无排名关键词');
+                        return false;
+                    }
+                    str = '<form action="piliangadd2.html" method="post"><input type="hidden" name="domain" value="'+url+'"><table id="list" class="table table-bordered"><thead><tr><th width="15"><input type="checkbox" id="all"/></th><th>关键词</th><th width="80">百度排名</th><th width="80">百度指数</th><th width="80">竞价数量</th><th width="300">网页标题</th></tr></thead><tbody>';
+
+                    for (var i = 0; i < json.length; i++) {
+                        if(json[i]['rank']<100) {
+                            if(json[i]['baidu_index']<0)json[i]['baidu_index']=0;
+                            str += '<tr><td>';
+                            str +='<input type="checkbox" value="'+json[i]['keyword']+'@'+json[i]['rank']+'@'+json[i]['page_title']+'@'+json[i]['baidu_index']+'" name="check[]"/>';
+                            str+='</td><td>' + json[i]['keyword'] + '</td><td>' + json[i]['rank'] + '</td><td>' + json[i]['baidu_index'] + '</td><td>' + json[i]['bidword_companycount'] + '</td><td><span title="' + json[i]['page_title'] + '">' + json[i]['page_title'].substring(0, 20) + '</span></td></tr>';
+                        }
+                    }
+                    str += '</tbody></table><div class="submit"><button type="submit" id="submit" class="btn btn-primary js-ajax-submit">{:lang("提交")}</button></div></form>';
+                    $('#jieguo').html(str);
+
+				}
+			});
+            return false;
+        });
+        $(document).on('click','#all',function(){
+            if(this.checked){
+                $("#list :checkbox").prop("checked", true);
+            }else{
+                $("#list :checkbox").prop("checked", false);
+            }
+		});
+	})
+</script>
+</body>
+</html>

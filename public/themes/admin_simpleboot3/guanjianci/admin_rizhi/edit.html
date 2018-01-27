@@ -1,0 +1,77 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">所有记录</a></li>
+        <!--<li>-->
+            <!--<a href="{:url('AdminIndex/add')}">添加记录</a>-->
+        <!--</li>-->
+        <li class="active"><a href="#">编辑记录</a></li>
+    </ul>
+    <form action="{:url('AdminIndex/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <input type="hidden" name="post[id]" value="{$post.id}">
+                    <tr>
+                        <th width="150">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_title]"
+                                   id="title" required value="{$post.post_title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>用户ID<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[user_id]" id="user_id" value="{$post.user_id}"
+                                   placeholder="请输入用户ID"></td>
+                    </tr>
+                    <tr>
+                        <th>链接<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_url]" id="url" value="{$post.post_url}"
+                                   placeholder="请输入链接" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>发布者<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_fabuzhe]" id="fabuzhe" value="{$post.post_fabuzhe}"
+                                   placeholder="请输入发布者" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>回答者<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_huidazhe]" id="huidazhe" value="{$post.post_huidazhe}"
+                                   placeholder="请输入回答者" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>点赞</th>
+                        <td>
+                            <php>
+                                $checked=$post['is_dianzan']?"checked":"";
+                            </php>
+                            <input type="checkbox" name="post[is_dianzan]" id="is_dianzan" value="1" {$checked}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td><input class="form-control" type="text" name="post[remark]" id="remark" value="{$post.remark}"
+                                   placeholder="请输入备注"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

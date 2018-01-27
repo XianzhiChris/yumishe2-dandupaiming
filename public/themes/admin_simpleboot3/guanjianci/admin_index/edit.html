@@ -1,0 +1,99 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">所有记录</a></li>
+        <!--<li>-->
+            <!--<a href="{:url('AdminIndex/add')}">添加记录</a>-->
+        <!--</li>-->
+        <li class="active"><a href="#">编辑记录</a></li>
+    </ul>
+    <form action="{:url('AdminIndex/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <input type="hidden" name="post[id]" value="{$post.id}">
+                    <tr>
+                        <th width="150">关键词<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_title]"
+                                   id="title" required value="{$post.post_title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>用户ID<span class="form-required">*</span></th>
+                        <td><input class="form-control" type="text" name="post[user_id]" id="user_id" value="{$post.user_id}"
+                                   placeholder="请输入用户ID"></td>
+                    </tr>
+                    <tr>
+                        <th>链接<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_url]" id="url" value="{$post.post_url}"
+                                   placeholder="请输入链接" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>初始排名<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_chushipaiming]" id="chushipaiming" value="{$post.post_chushipaiming}"
+                                   placeholder="请输入初始排名" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>搜索引擎<span class="form-required">*</span></th>
+                        <td>
+                            <php>
+                                $baidu=$post['post_type']==1?"selected":"";
+                                $sougou=$post['post_type']==2?"selected":"";
+                                $sanliuling=$post['post_type']==3?"selected":"";
+                            </php>
+                            <select name="post[post_type]">
+                                <option value="1" {$baidu}>百度</option>
+                                <option value="2" {$sougou}>搜狗</option>
+                                <option value="3" {$sanliuling}>360</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>点击次数<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_dianjicishu]" id="dianjicishu" value="{$post.post_dianjicishu}"
+                                   placeholder="请输入点击次数" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>点击天数<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_tianshu]" id="dianjitianshu" value="{$post.post_tianshu}"
+                                   placeholder="请输入点击天数" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>审核<span class="form-required">*</span></th>
+                        <td>
+                            <php>
+                                $checked=$post['is_ok']==1?"checked":"";
+                            </php>
+                            <input type="checkbox" name="post[is_ok]" id="is_ok" value="1" {$checked}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td><input class="form-control" type="text" name="post[remark]" id="remark" value="{$post.remark}"
+                                   placeholder="请输入备注"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

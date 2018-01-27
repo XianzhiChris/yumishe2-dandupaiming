@@ -1,0 +1,121 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a>用户信息</a></li>
+	</ul>
+
+	<form action="{:url('AdminIndex/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+		<input type="hidden" name="id" value="{$id}" />
+		<div class="row">
+			<div class="col-md-12">
+				企业资料：
+				<div class="form-group">
+					<label for="input-gongsimingcheng">企业名称<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-gongsimingcheng" name="gongsimingcheng" value="{$user.gongsimingcheng}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-yingyezhizhaohaoma">营业执照号码<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-yingyezhizhaohaoma" name="yingyezhizhaohaoma" value="{$user.yingyezhizhaohaoma}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-yingyezhizhao">营业执照<span style="color:red"> *</span></label>
+					<br/>
+					<input type="hidden" name="yingyezhizhao" id="input-yingyezhizhao" value="{$user.yingyezhizhao}">
+					<a href="javascript:uploadOneImage('图片上传','#input-yingyezhizhao');">
+						<if condition="!empty($user.yingyezhizhao)">
+							<img src="/upload/{$user.yingyezhizhao}" id="input-yingyezhizhao-preview" width="135" style="cursor: pointer"/>
+							<else/>
+							<img src="__TMPL__/public/assets/images/default-thumbnail.png" id="input-yingyezhizhao-preview" width="135" style="cursor: pointer"/>
+						</if>
+					</a>
+				</div>
+				<div class="form-group">
+					<label for="input-faren">法人<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-faren" name="faren" value="{$user.faren}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-lianxidianhua">联系电话<span style="color:red"> *</span></label>
+					<input class="form-control" type="text" id="input-lianxidianhua" name="lianxidianhua" value="{$user.lianxidianhua}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-dianziyouxiang">电子邮箱<span style="color:red"> *</span></label>
+					<input class="form-control" type="text" id="input-dianziyouxiang" name="dianziyouxiang" value="{$user.dianziyouxiang}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-dizhi">公司地址<span style="color:red"> *</span></label>
+					<input class="form-control" type="text" id="input-dizhi" name="dizhi" value="{$user.dizhi}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-wangzhi">官网网址<span style="color:red"> *</span></label>
+					<input class="form-control" type="text" id="input-wangzhi" name="wangzhi" value="{$user.wangzhi}" required>
+				</div>
+				<br>
+				操作员资料：
+				<!--<div class="form-group">-->
+					<!--<label for="input-user_nickname">昵称<span style="color:red"> *</span></label>-->
+					<!--<input type="text" class="form-control" id="input-user_nickname" name="user_nickname" value="{$user.user_nickname}" required>-->
+				<!--</div>-->
+				<div class="form-group">
+					<label for="input-lianxiren">姓名<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-lianxiren" name="lianxiren" value="{$user.lianxiren}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-xingbie">性别<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-xingbie" name="xingbie" value="{$user.xingbie}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-gangwei">岗位<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-gangwei" name="gangwei" value="{$user.gangwei}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-dianhua">电话<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-dianhua" name="dianhua" value="{$user.dianhua}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-qq">QQ<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-qq" name="qq" value="{$user.qq}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-youxiang">邮箱<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-youxiang" name="youxiang" value="{$user.youxiang}" required>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="input-score">米币<span style="color:red"> *</span></label>
+					<input type="text" class="form-control" id="input-score" name="score" value="{$user.score}" required>
+				</div>
+				<div class="form-group">
+					<label for="input-user_status">状态<span style="color:red"> *</span></label>
+					<br/>
+					<eq name="user.user_status" value="1">
+						已审核
+					</eq>
+					<eq name="user.user_status" value="2">
+						<span style="color:red">未审核</span>
+					</eq>
+				</div>
+				<div class="form-group">
+					<label for="input-user_group">会员级别<span style="color:red"> *</span></label>
+					<select class="form-control" id="input-user_group" name="user_group">
+						<option value="0">{:lang('未开户')}</option>
+						<foreach name="user_group" item="vo">
+							<php>$user_group_selected=$user['user_group']==$vo['id']?"selected='selected'":"";</php>
+							<option value="{$vo.id}" {$user_group_selected}>{$vo.post_title}</option>
+						</foreach>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('保存并审核')}</button>
+				<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

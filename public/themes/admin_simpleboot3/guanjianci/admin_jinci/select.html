@@ -1,0 +1,98 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form method="post" class="js-ajax-form" action="{:url('AdminIndex/shenhe')}">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>评论内容</th>
+                <th width="50">审核</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="categories" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" data-name="{$vo.post_title}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.post_title}</td>
+                    <td>
+                        <if $vo.status=="1">
+                            <!--已--><i class="fa fa-check"></i>
+                            <else/>
+                            <!--未--><i class="fa fa-close"></i>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+
+
+            </tbody>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th colspan="3">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('AdminIndex/shenhe')}" data-subcheck="true" data-msg="您确定审核吗？">
+                        {:lang('审核')}
+                    </button>
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.data-item-tr').click(function (e) {
+
+        console.log(e);
+        var $this = $(this);
+        if ($(e.target).is('input')) {
+            return;
+        }
+
+        var $input = $this.find('input');
+        if ($input.is(':checked')) {
+            $input.prop('checked', false);
+        } else {
+            $input.prop('checked', true);
+        }
+    });
+
+    function confirm() {
+        var selectedCategoriesId   = [];
+        var selectedCategoriesName = [];
+        var selectedCategories     = [];
+        $('.js-check:checked').each(function () {
+            var $this = $(this);
+            selectedCategoriesId.push($this.val());
+            selectedCategoriesName.push($this.data('name'));
+
+            selectedCategories.push({
+                id: $this.val(),
+                name: $this.data('name')
+            });
+        });
+
+        return {
+            selectedCategories: selectedCategories,
+            selectedCategoriesId: selectedCategoriesId,
+            selectedCategoriesName: selectedCategoriesName
+        };
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>关键词任务添加</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style>
+	#submit {float:right;margin-right: 80px;}
+	#submit button {padding:10px 50px;margin-left: 30px;}
+</style>
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav" />
+
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li><a href="{:url('user/guanjianci/index')}"><i class="fa fa-building-o"></i> 关键词任务管理</a></li>
+						<li class="active" data-toggle="tab"><a href="#">关键词添加任务</a></li>
+						<!--<li><a href="{:url('user/guanjianci/piliangadd')}">关键词添加任务</a></li>-->
+					</ul>
+					<form action="{:url('user/guanjianci/piliangadd3')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<table class="table table-bordered">
+								<tr>
+									<th width="80">搜索引擎</th>
+									<th>关键词</th>
+									<th>域名</th>
+									<th width="80">当前排名</th>
+									<th width="50">指数</th>
+									<th width="80">每日次数</th>
+									<th width="150">优化天数</th>
+									<th width="80">费用</th>
+								</tr>
+								<foreach name="check" item="vo" key="k">
+									<php>
+										$dj=1;
+										$data=explode('@',$vo);
+										if($data[3]<1){ //无指数
+											if($data[1]<100){
+												$tig="(建议:7-20天)";
+												$t1=7;$t2=20;
+												$mey=$data[1]*0.11;
+											}
+											if($data[1]<50){
+												$tig="(建议:7-15天)";
+												$t1=7;$t2=15;
+												$mey=($data[1]-1)*0.104+1;
+											}
+										}else{
+											if($data[1]<100){
+												$tig="(建议:15-30天)";
+												$t1=15;$t2=30;
+												$mey=($data[1]-50)*0.061+12;
+											}
+											if($data[1]<50){
+												$tig="(建议:7-20天)";
+												$t1=7;$t2=20;
+												$mey=($data[1]-1)*0.062+9;
+											}
+											if($data[1]<30){
+												$dj=$data[3]*0.03;
+											}
+											if($data[1]<20){
+												$dj=$data[3]*0.05;
+											}
+											if($data[1]<10){
+												$dj=$data[3]*0.1;
+											}
+										}
+										$dj=round($dj);
+										$mey*=$t2;
+										$mey=round($mey);
+										$tal+=$mey;
+									</php>
+								<tr>
+									<td>
+										<input type="hidden" name="post_biaoti[]" value="{$data.2}" class="{$k}_post_biaoti"/>
+										<select style="color:#000;" class="post_type" data-id="{$k}">
+											<option value="1">百度</option>
+											<!--<option value="2">搜狗</option>-->
+											<option value="3">360</option>
+										</select>
+										<input type="hidden" name="post_type[]" id="{$k}_post_type" value="1"/>
+									</td>
+									<td>{$data.0}<input type="hidden" name="post_title[]" id="{$k}_post_title" value="{$data.0}"/></td>
+									<td>{$domain}<input type="hidden" name="post_url[]" id="{$k}_post_url" value="{$domain}"/></td>
+									<td><span class="{$k}_post_chushipaiming">{$data.1}</span><input type="hidden" name="post_chushipaiming[]" id="{$k}_post_chushipaiming" value="{$data.1}"/></td>
+									<td>{$data.3}<input type="hidden" name="post_zhishu[]" id="{$k}_post_zhishu" value="{$data.3}"/></td>
+									<td>{$dj}<input type="hidden" name="post_dianjicishu[]" id="{$k}_post_dianjicishu" value="{$dj}"/></td>
+									<td><input type="text" name="post_tianshu[]" class="post_tianshu" data-id="{$k}" required style="color:#000;width:30px;" data-min="{$t1}" data-max="{$t2}" value="{$t2}" id="{$k}_post_tianshu"/> {$tig}</td>
+									<td><span id="{$k}_mey" class="mey">{$mey}</span> 米币</td>
+								</tr>
+								</foreach>
+							</table>
+							<div id="submit">合计：<span id="tal">{$tal}</span> 米币<button type="submit" class="btn btn-primary js-ajax-submit" id="submit_button">{:lang('提&nbsp;&nbsp;交')}</button></div>
+							<div style="clear:both;"></div>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+	$(function(){
+	   $('.post_type').change(function(){
+	       var dataid=$(this).attr('data-id');
+	       var c_chushipaiming=$('.'+dataid+'_post_chushipaiming');
+	       var i_chushipaiming=$('#'+dataid+'_post_chushipaiming');
+           c_chushipaiming.html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+	       var post_title=$('#'+dataid+'_post_title').val();
+	       var post_url=$('#'+dataid+'_post_url').val();
+	       var post_type=$(this).val();
+
+           var zhishu=parseInt($('#'+dataid+'_post_zhishu').val());
+           var tianshu=parseInt($('#'+dataid+'_post_tianshu').val());
+           var mey=0;
+           var tal=0;
+           $.ajax({
+               type:"GET",
+               url:'/user/guanjianci/paiming4/post_title/'+post_title+'/post_url/'+post_url+'/post_type/'+post_type,
+               async:true,
+               dataType : "json",
+               success:function(data){
+                   console.log(data);
+                   if(data===1) {
+                       c_chushipaiming.html(i_chushipaiming.val());
+                       alert('获取不到排名数据');
+                       return false;
+                   }else{
+                       //5118 返回数据，比较慢
+                       c_chushipaiming.html(data.rank);
+                       i_chushipaiming.val(data.rank);
+                       $('.'+dataid+'_post_biaoti').val(data.page_title);
+                       $('#'+dataid+'_post_type').val(post_type);
+                       //重新计算价格
+                       if(zhishu<1){
+                           if(data.rank<100){
+                               mey=data.rank*0.11;
+                           }
+                           if(data.rank<50){
+                               mey=(data.rank-1)*0.104+1;
+                           }
+                       }else{
+                           if(data.rank<100){
+                               mey=(data.rank-50)*0.061+12;
+                           }
+                           if(data.rank<50){
+                               mey=(data.rank-1)*0.062+9;
+                           }
+                       }
+                       console.log(mey);
+                       mey=Math.round(mey*tianshu);
+                       $('#'+dataid+'_mey').html(mey);
+                       //合计
+                       $(".mey").each(function(){
+                           tal+=parseInt($(this).html());
+                       });
+                       $('#tal').html(tal);
+                   }
+               }
+           });
+           return false;
+	   });
+	   $('.post_tianshu').keyup(function(){
+           	var dataid=$(this).attr('data-id');
+			var tianshu=parseInt($(this).val());
+			if(tianshu<7){
+			    alert('优化天数不得小于7天');
+			    return false;
+			}
+			var paiming=parseInt($('#'+dataid+'_post_chushipaiming').val());
+			var zhishu=parseInt($('#'+dataid+'_post_zhishu').val());
+			var max=$(this).attr('data-max');
+			var mix=$(this).attr('data-mix');
+			var mey=0;
+			var tal=0;
+
+           console.log(dataid);
+           console.log(paiming);
+           console.log(zhishu);
+           console.log(tianshu);
+
+           if(zhishu<1){
+               if(paiming<100){
+                   mey=paiming*0.11;
+               }
+               if(paiming<50){
+                   mey=(paiming-1)*0.104+1;
+               }
+           }else{
+               if(paiming<100){
+                   mey=(paiming-50)*0.061+12;
+               }
+               if(paiming<50){
+                   mey=(paiming-1)*0.062+9;
+               }
+           }
+           console.log(mey);
+           mey=Math.round(mey*tianshu*{$jiage});
+           $('#'+dataid+'_mey').html(mey);
+           //合计
+           $(".mey").each(function(){
+               tal+=parseInt($(this).html());
+           });
+           $('#tal').html(tal);
+       });
+        $('#submit_button').click(function(){
+
+            var tal=parseInt($('#tal').html());
+
+            //判断积分是否足够
+            var score_my = {$myscore};
+
+            if (parseInt(score_my) < tal) {
+                alert("对不起，你的米币不足！您的米币：" + score_my + "，所需米币：" + tal + "");
+                return false;
+            }
+            //
+
+            //提醒是否确认
+            var is_add = confirm("本次任务将扣除" + tal + "米币，是否确认添加？");
+            if (!is_add) {
+                return false;
+            }
+            //
+
+            return true;
+        });
+	});
+</script>
+</body>
+</html>

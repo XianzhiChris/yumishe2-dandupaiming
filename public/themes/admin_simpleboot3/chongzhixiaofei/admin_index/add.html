@@ -1,0 +1,61 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">所有记录</a></li>
+        <li class="active"><a href="{:url('AdminIndex/add')}">添加记录</a></li>
+    </ul>
+    <form action="{:url('AdminIndex/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">类型</th>
+                        <td>
+                            <select name="post[post_type]">
+                                <option value="1">充值</option>
+                                <option value="2">消费</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">用户ID<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[user_id]"
+                                   id="userid" required value="" placeholder="请输入用户ID"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_title]"
+                                   id="title" required value="" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>金额<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_jine]" id="keywords" value=""
+                                   placeholder="请输入金额" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td><input class="form-control" type="text" name="post[remark]" id="source" value=""
+                                   placeholder="请输入备注"></td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('AdminIndex/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

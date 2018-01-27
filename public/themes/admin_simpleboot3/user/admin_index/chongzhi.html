@@ -1,0 +1,45 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a>用户充值</a></li>
+	</ul>
+	<form class="well form-inline margin-top-20" method="post" action="">
+		用户:{$user_name}<br/>当前米币：{$score}
+	</form>
+	<form action="{:url('AdminIndex/chongzhiPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+		<input type="hidden" name="id" value="{$id}" />
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordere">
+					<tr>
+						<td>
+							充值米币：
+						</td>
+						<td>
+							<table width="100%">
+								<tbody><tr>
+									<td><input id="rbl_sel_0" name="jifen" value="1" type="radio"><label for="rbl_sel_0">1000米币（1000元）</label></td><td><input id="rbl_sel_1" name="jifen" value="2" type="radio"><label for="rbl_sel_1">2000米币（1960元）</label></td>
+									<!--<td><input id="rbl_sel_2" name="rbl_sel" value="3" type="radio"><label for="rbl_sel_2">12000米币（1000元）</label></td>-->
+								</tr><tr>
+									<td><input id="rbl_sel_3" name="jifen" value="3" type="radio"><label for="rbl_sel_3">5000米币（4750元）</label></td><td><input id="rbl_sel_4" name="jifen" value="4" type="radio"><label for="rbl_sel_4">10000米币（8800元）</label></td>
+									<!--<td><input id="rbl_sel_5" name="rbl_sel" value="6" type="radio"><label for="rbl_sel_5">160000米币（10000元）</label></td>-->
+								</tr>
+								</tbody></table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+				<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

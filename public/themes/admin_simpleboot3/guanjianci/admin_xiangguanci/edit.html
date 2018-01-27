@@ -1,0 +1,40 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminIndex/index')}">所有记录</a></li>
+        <li><a href="{:url('AdminXiangguanci/index',array('guanjianci_id'=>$guanjianci_id))}">相关词</a></li>
+        <li>
+        <li><a href="{:url('AdminXiangguanci/add',array('guanjianci_id'=>$guanjianci_id))}">添加相关词</a></li>
+        </li>
+        <li class="active"><a href="#">编辑相关词</a></li>
+    </ul>
+    <form action="{:url('AdminXiangguanci/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <input type="hidden" name="post[id]" value="{$post.id}">
+                    <input type="hidden" name="post[guanjianci_id]" value="{$guanjianci_id}">
+                    <tr>
+                        <th width="150">标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="post[post_title]"
+                                   id="title" required value="{$post.post_title}" placeholder="请输入标题"/>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

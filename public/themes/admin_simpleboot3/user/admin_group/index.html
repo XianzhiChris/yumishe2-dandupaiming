@@ -1,0 +1,86 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>会员级别</a></li>
+        <li><a href="{:url('AdminGroup/add')}">添加记录</a></li>
+    </ul>
+    <br/>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminGroup/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th>名称</th>
+                <th width="150">金额</th>
+                <th width="150">分成比例</th>
+                <th width="150">操作</th>
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.post_title}</td>
+                    <td>{$vo.post_jine}</td>
+                    <td>{$vo.fenchengbili}</td>
+                    <td><a href="{:url('AdminGroup/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a> |
+                        <a href="{:url('AdminGroup/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a></td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th>名称</th>
+                <th width="150">金额</th>
+                <th width="150">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminGroup/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    function refersh_window() {
+        var refersh_time = getCookie('refersh_time');
+        if (refersh_time == 1) {
+        }
+    }
+    setInterval(function () {
+        refersh_window();
+    }, 2000);
+    $(function () {
+        setCookie("refersh_time", 0);
+    }
+</script>
+</body>
+</html>

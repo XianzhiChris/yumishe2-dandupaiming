@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>关键词任务管理</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav" />
+
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-building-o"></i> 关键词任务管理</a></li>
+						<li><a href="{:url('user/guanjianci/piliangadd')}">关键词添加任务</a></li>
+						<!--<li><a href="{:url('user/guanjianci/piliangadd')}">批量添加任务</a></li>-->
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<table class="table table-bordered table-striped table-hover">
+								<thead>
+								<tr>
+									<th>关键词</th>
+									<th width="200">网址</th>
+									<th width="50">搜索</th>
+									<th width="60">排名(初次)</th>
+									<th width="50">模式</th>
+									<th width="80">实时排名<a href="javascript:void(0)" id="sspm">查询</a></th>
+									<!--<th width="50">日点击</th>-->
+									<th width="50">持续天数</th>
+									<th width="50">添加时间</th>
+									<th width="50">进度</th>
+									<!--<th width="50">操作</th>-->
+								</tr>
+								</thead>
+								<tbody id="tbody1">
+								<foreach name="lists" item="vo">
+									<tr>
+										<td>{$vo.post_title}
+											<input type="hidden" value="{$vo.id}" class="hid">
+										<!--<input type="hidden" value="{$vo.post_title}" name="hid_key" class="hid_key">-->
+										</td>
+										<td>{$vo.post_url}
+											<!--<input type="hidden" value="{$vo.post_url}" name="hid_domain" class="hid_domain">-->
+										</td>
+										<td>
+											<eq name="vo.post_type" value="1">
+												百度
+											</eq>
+											<eq name="vo.post_type" value="2">
+												搜狗
+											</eq>
+											<eq name="vo.post_type" value="3">
+												360
+											</eq>
+											<!--<input type="hidden" name="hid_type" value="{$vo.post_type}" class="hid_type">-->
+										</td>
+										<td>
+											{$vo.post_chushipaiming}</td>
+										<td>智能分配</td>
+										<td></td>
+										<!--<td>{$vo.post_dianjicishu}</td>-->
+										<td>{$vo.post_tianshu}</td>
+										<td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+										<td>
+											<php>
+												$zsl=$vo['post_dianjicishu'] * $vo['post_tianshu'];
+											</php>
+											{$vo.task_ok_num}/{$zsl}
+										</td>
+										<!--<td>-->
+											<!--<if condition="$vo['task_ok_num']==$zsl">-->
+												<!--<a class="js-ajax-dialog-btn" href="{:url('user/guanjianci/xufei',array('id'=>$vo['id']))}" data-msg="扣除{$vo.post_dianjicishu * $vo.post_tianshu}个米币，您确定要续费吗？" data-ok="" data-cacel="取消" onclick="xufei({$vo.post_dianjicishu * $vo.post_tianshu})">续费</a>-->
+											<!--</if>-->
+										<!--</td>-->
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+						</div>
+
+						<div><ul class="pagination">{$page}</ul></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script>
+	$(function(){
+        $('#sspm').click(function(){
+            var trs = $("#tbody1").find("tr");
+            for (var i = 0; i < trs.length; i++) {
+                var id = $(trs[i]).find(".hid").val();
+                $.ajax({
+                    url: "/user/guanjianci/paiming5/id/"+id+"/num/"+i+"/sj/"+Math.random(),
+                    type: "GET",
+                    async:true,
+                    dataType: "text",
+                    beforeSend: function (XMLHttpRequest) {
+                        $(trs[i]).find("td").eq(5).html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+                    },
+                    success: function (data) {
+                        var str = data.split(",");
+                        var rank = str[0];
+                        var num = str[1];
+						$(trs[num]).find("td").eq(5).html(rank);
+                    }
+                });
+            }
+        });
+	    $('#sspm2').click(function(){
+            var trs = $("#tbody1").find("tr");
+            for (var i = 0; i < trs.length; i++) {
+                var key_word = $(trs[i]).find(".hid_key").val();
+                key_word = encodeURI(key_word);
+                var domain = $(trs[i]).find(".hid_domain").val();
+                var type = $(trs[i]).find(".hid_type").val();
+
+                $.ajax({
+                    url: "/user/guanjianci/paiming/post_title/" + key_word + "/post_url/" + domain + "/ssyq/" + type + "/num/"+i+"/sj/" + Math.random(),
+                    type: "Get",
+                    data: "",
+                    dataType: "text",
+                    beforeSend: function (XMLHttpRequest) {
+
+                        $(trs[i]).find("td").eq(5).html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+
+                    },
+                    success: function (data) {
+                        if (data.indexOf(",") > 0) {
+                            var str = data.split(",");
+                            var rank = str[0];
+                            var num = str[1];
+
+                            if (rank=="未查询到"||data=="") {
+                                $(trs[num]).find("td").eq(5).html(rank + "<input type=\"button\" value=\"查询\" onclick=\"dccx('"+str[2]+"','"+str[3]+"','"+str[4]+"',"+num+")\" />");
+                            }
+                            else {
+                                $(trs[num]).find("td").eq(5).html(rank);
+                            }
+                        }
+                        else {
+                            //应该不会出现这种情况，肯定会有","
+                        }
+
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                        alert(XMLHttpRequest);
+//                        alert(textStatus);
+//                        alert(errorThrown);
+                    }
+                });
+
+            }
+		})
+	});
+	function xufei(num){
+        //判断积分是否足够
+        var score_my = {$myscore};
+
+        var score_need = num * {$jiage};
+
+        if (parseInt(score_my) < parseInt(score_need)) {
+            alert("对不起，你的米币不足！您的米币：" + score_my + "，所需米币：" + score_need + "");
+            return false;
+        }
+
+        return true;
+	}
+	function dccx(ssyq,key,url,num){
+        var trs = $("#tbody1").find("tr");
+        key = encodeURI(key);
+        $(trs[num]).find("td").eq(5).html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+        $.ajax({
+            url: "/user/guanjianci/paiming/post_title/" + key + "/post_url/" + url + "/ssyq/" + ssyq + "/num/"+num+"/sj/" + Math.random(),
+            type: "Get",
+            data: "",
+            dataType: "text",
+            beforeSend: function (XMLHttpRequest) {
+
+                $(trs[num]).find("td").eq(5).html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+
+            },
+            success: function (data) {
+                if (data.indexOf(",") > 0) {
+                    var str = data.split(",");
+                    var rank = str[0];
+                    var num = str[1];
+
+                    if (rank=="未查询到"||data=="") {
+                        $(trs[num]).find("td").eq(5).html(rank + "<input type=\"button\" value=\"查询\" onclick=\"dccx('"+str[2]+"','"+str[3]+"','"+str[4]+"',"+num+")\" />");
+                    }
+                    else {
+                        $(trs[num]).find("td").eq(5).html(rank);
+                    }
+                }
+                else {
+                    //应该不会出现这种情况，肯定会有","
+                }
+
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                        alert(XMLHttpRequest);
+//                        alert(textStatus);
+//                        alert(errorThrown);
+            }
+        });
+	}
+</script>
+</body>
+</html>

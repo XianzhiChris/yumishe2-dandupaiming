@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>个人中心</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style>
+.control-label {
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+</style>
+</head>
+<body class="body-white" id="top">
+<include file="public@nav" />
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-list-alt"></i>个人中心</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<div class="row">
+								<div class="col-md-3">
+									<a href="{:url('profile/avatar')}">
+										<if condition="empty($avatar)">
+											<img src="__TMPL__/Public/assets/images/headicon_128.png" class="headicon" width="128" />
+											<else />
+											<img src="__ROOT__/upload/{$avatar}" class="headicon" width="128"/>
+										</if>
+									</a>
+									<div style="margin-top: 10px;">(点击图片修改头像)</div>
+								</div>
+								<div class="col-md-9">
+									<!--<div class="form-group">-->
+										<!--<label class="control-label" for="input-user_nicename">昵称:</label>-->
+										<!--<div>{$user_nickname|default='未填写'}</div>-->
+									<!--</div>-->
+									<div class="form-group">
+										<label class="control-label" for="input-sex">米币:</label>
+										<div>
+											{$myscore}
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label" for="input-user_url">推广:</label>
+										<div>
+											<input type="text" class="form-control" value="{:url('/user/register/index',array('user_id'=>$id),'html',true)}" style="width:80%" onmouseover="select();"/>
+											<br/>
+											<div class="bshare-custom icon-medium-plus"><a title="分享到" href="http://www.bShare.cn/" id="bshare-shareto" class="bshare-more">分享到</a><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到网易微博" class="bshare-neteasemb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/button.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script><a class="bshareDiv" onclick="javascript:return false;"></a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+											<br/>
+											<img src="http://qr.liantu.com/api.php?w=200&m=10&text={:url('/user/Register/index',array('user_id'=>$id),'html',true)}"/>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script type="text/javascript" charset="utf-8">
+    bShare.addEntry({
+        title: "玉米社",
+        url: "{:url('/user/register/index',array('user_id'=>$id),'html',true)}",
+        summary: "我爱玉米社"
+//        pic: "指定分享的图片的链接，目前支持新浪微博，QQ空间，搜狐微博，网易微博，人人网， 嘀咕，腾讯微博和做啥。"
+    });
+</script>
+</body>
+</html>

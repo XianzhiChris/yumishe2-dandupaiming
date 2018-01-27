@@ -1,0 +1,93 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">所有记录</a></li>
+        <li><a href="{:url('AdminJinci/add')}">添加记录</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminJinci/index')}">&nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入关键字...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminJinci/index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminJinci/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>标题</th>
+                <th width="90">操作</th>
+            </tr>
+            </thead>
+            <foreach name="articles" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td><b>{$vo.id}</b></td>
+                    <td>{$vo.post_title}</td>
+                    <td>
+                        <a href="{:url('AdminJinci/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a> |
+                        <a href="{:url('AdminJinci/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>标题</th>
+                <th width="90">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminJinci/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    function refersh_window() {
+        var refersh_time = getCookie('refersh_time');
+        if (refersh_time == 1) {
+        }
+    }
+    setInterval(function () {
+        refersh_window();
+    }, 2000);
+    $(function () {
+        setCookie("refersh_time", 0);
+    })
+
+</script>
+</body>
+</html>

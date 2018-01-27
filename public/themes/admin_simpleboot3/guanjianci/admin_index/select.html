@@ -1,0 +1,105 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <from method="post" action="{:url('AdminIndex/xgc_add')}">
+        <table class="table table-hover table-bordered table-list">
+            <tr>
+                <td>
+                    <input type="hidden" name="post[guanjianci_id]" value="{$guanjianci_id}">
+                    <input type="text" class="form-control" name="post[post_title]" id="post_title" required>
+                </td>
+                <td width="100">
+                    <button type="submit">{:lang('ADD')}</button>
+                </td>
+            </tr>
+        </table>
+    </from>
+    <form method="post" class="js-ajax-form" action="{:url('AdminIndex/xgc_delete')}">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>相关词</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="categories" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" data-name="{$vo.post_title}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.post_title}</td>
+                    <td>编辑 | 删除</td>
+                </tr>
+            </foreach>
+
+
+            </tbody>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th colspan="3">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('AdminIndex/xgc_delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                        {:lang('删除')}
+                    </button>
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.data-item-tr').click(function (e) {
+
+        console.log(e);
+        var $this = $(this);
+        if ($(e.target).is('input')) {
+            return;
+        }
+
+        var $input = $this.find('input');
+        if ($input.is(':checked')) {
+            $input.prop('checked', false);
+        } else {
+            $input.prop('checked', true);
+        }
+    });
+
+    function confirm() {
+        var selectedCategoriesId   = [];
+        var selectedCategoriesName = [];
+        var selectedCategories     = [];
+        $('.js-check:checked').each(function () {
+            var $this = $(this);
+            selectedCategoriesId.push($this.val());
+            selectedCategoriesName.push($this.data('name'));
+
+            selectedCategories.push({
+                id: $this.val(),
+                name: $this.data('name')
+            });
+        });
+
+        return {
+            selectedCategories: selectedCategories,
+            selectedCategoriesId: selectedCategoriesId,
+            selectedCategoriesName: selectedCategoriesName
+        };
+    }
+</script>
+</body>
+</html>

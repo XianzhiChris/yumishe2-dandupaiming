@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+body.body-white{color: #e6e6e6;background: #282d2f;}
+.btn.btn-transparent.btn-transparent-primary {
+    border-color: #22b2e1;
+}
+.btn.btn-transparent {
+    color: #fff;
+
+    border-color: #fff;
+    font-weight: 500;
+}
+.dropdown-menu-messages {
+    padding: 10px;
+    width:220px;
+    background-color: #2f3638;
+    border: 1px solid #525e62;
+    border-radius: 0;
+}
+.dropdown-menu > li > a{
+    color:#fff;
+    padding:15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+    background-color: #465154;
+}
+.navbar-default{
+    background-color: #2f3638;
+}
+@media (min-width:992px){
+    .col-md-3{width:20%;}
+    .col-md-9{width:80%;}
+}
+@media (min-width:1200px){
+    .container{width:100%;}
+}
+.tabs {
+    background: #4b5357;
+    border-radius: 0;
+    border: 1px solid #33393c;
+}
+.tab-content{
+    padding:20px;
+}
+.nav-tabs{
+    background: #42494c;
+    border-color: #33393c;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    border:0;
+    color:#fff;
+    background:#333;
+}
+.fa {
+    margin-right:5px;
+}
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse{
+    margin-left:15px;
+}
+.navbar-right{
+    margin-right:15px;
+}
+.container{
+    padding-left:0;
+}
+.tabs .row {
+    /*padding:15px;*/
+}
+.bshare-custom .bshare-more{
+    display: none !important;
+}
+.nav-list{
+    background: #282D2F;
+}
+.nav-list > li > a{
+    background:#232829;
+    color:#fff;
+}
+.nav-list > li .submenu > li > a{
+    background: #282D2F!important;
+    border: 0!important;
+    color:#868e91;
+}
+.nav-list li .submenu{
+    border:0!important;
+}
+.nav-list > li{
+    border:0!important;
+}
+.nav-list > li > a:hover{
+    background:#232829;
+    color:#fff;
+}
+.nav-list > li .submenu > li > a:hover{
+    color:#fff!important;
+}
+.form-control{
+    color: #FDFDFD;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.form-control option{
+    color:#000;
+}
+.form-control:focus {
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075), 0 0 10px rgba(255, 255, 255, 0.15);
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{
+    border:0;
+}
+.table-bordered{
+    border:0;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+    border:0;
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background:#333;
+}
+.nav-tabs > li > a{
+    border:0;
+}
+.table-striped > tbody > tr:nth-of-type(2n+1){
+    background:none;
+}
+.table-hover > tbody > tr:hover{
+    background:none;
+}
+.table-hover > tbody > tr{
+    border-bottom:1px dashed #666;
+}
+.table .table{
+    background-color: #282d2f;
+}
+.well{
+    background-color: #2f3030;
+    margin-bottom: 0;
+    border: 0;
+}
+.submenu .current-menu-item a {
+    color:#18BC9C!important;
+}

@@ -1,0 +1,139 @@
+<style>
+    /*-----------------导航hack--------------------*/
+    .nav-list > li.open {
+        position: relative;
+    }
+
+    .nav-list > li.open .back {
+        display: none;
+    }
+
+    .nav-list > li.open .normal {
+        display: inline-block !important;
+    }
+
+    .nav-list > li.open a {
+        padding-left: 7px;
+    }
+
+    .nav-list > li .submenu > li > a {
+        background: #fff;
+    }
+
+    .nav-list > li .submenu > li a > [class*="fa-"]:first-child {
+        left: 20px;
+    }
+
+    .nav-list > li ul.submenu ul.submenu > li a > [class*="fa-"]:first-child {
+        left: 30px;
+    }
+
+    /*----------------导航hack--------------------*/
+</style>
+<div class="list-group">
+    <ul class="nav nav-list">
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="fa fa-rocket normal"></i>
+                <span class="menu-text normal"> 关键词快速排名管理 </span>
+                <b class="arrow fa fa-angle-right normal"></b>
+                <i class="fa fa-reply back"></i>
+                <span class="menu-text back">返回</span>
+
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/guanjianci/piliangadd')}">
+                        <i class="fa fa-caret-right"></i>
+                        <span class="menu-text">
+									关键词任务添加								</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/guanjianci/index')}">
+                        <i class="fa fa-caret-right"></i>
+                        <span class="menu-text">
+									关键词排名任务								</span>
+                    </a>
+
+                </li>
+                <!--<li>-->
+                    <!--<a class="list-group-item" href="{:cmf_url('user/guanjianci/add')}">-->
+                        <!--<i class="fa fa-caret-right"></i>-->
+                        <!--<span class="menu-text">-->
+									<!--关键词任务添加								</span>-->
+                    <!--</a>-->
+
+                <!--</li>-->
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="fa fa-rmb"></i>
+                <span class="menu-text normal"> 财务信息 </span>
+                <b class="arrow fa fa-angle-right normal"></b>
+                <i class="fa fa-reply back"></i>
+                <span class="menu-text back">返回</span>
+
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/Mingxi/index')}">
+                        <i class="fa fa-caret-right"></i>
+                        <span class="menu-text">
+									财务明细								</span>
+                    </a>
+
+                </li>
+
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/Chongzhi/index')}">
+                        <i class="fa fa-caret-right"></i>
+                        <span class="menu-text">
+									账户充值								</span>
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li><a href="#" class="dropdown-toggle">
+            <i class="fa fa-user"></i>
+            <span class="menu-text normal"> 个人信息 </span>
+            <b class="arrow fa fa-angle-right normal"></b>
+            <i class="fa fa-reply back"></i>
+            <span class="menu-text back">返回</span>
+
+        </a>
+
+            <ul class="submenu">
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/Profile/center')}"><i class="fa fa-caret-right"></i> 个人中心</a>
+                </li>
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/Profile/edit')}"><i class="fa fa-caret-right"></i> 修改资料</a>
+                </li>
+                <li>
+                    <a class="list-group-item" href="{:cmf_url('user/Profile/password')}"><i class="fa fa-caret-right"></i> 修改密码</a>
+                </li>
+            </ul></li>
+    </ul>
+    <!--<a class="list-group-item" href="{:cmf_url('user/Profile/binding')}"><i class="fa fa-exchange fa-fw"></i> 绑定账号</a>-->
+</div>
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/wind.js"></script>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+<script>
+    $(".nav-list a").each(function(){
+        if ($(this)[0].href == String(window.location) && $(this).attr('href')!="") {
+            $(this).parent("li").addClass("current-menu-item");
+        }
+    });
+</script>

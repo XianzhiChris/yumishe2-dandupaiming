@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$user_nickname}  - 关键词任务添加</title>
+<meta name="keywords" content=""/>
+<meta name="description" content="">
+<include file="public@head"/>
+<style>
+	#paiming li {list-style: none; float:left; padding-right:30px;}
+	#shoulu {display:none;}
+</style>
+</head>
+
+<body class="body-white" id="top">
+<include file="public@nav" />
+
+	<div class="container tc-main">
+		<div class="row">
+			<div class="col-md-3">
+				<include file="public@usernav" />
+			</div>
+			<div class="col-md-9">
+				<div class="tabs">
+					<ul class="nav nav-tabs">
+						<li><a href="{:url('user/guanjianci/index')}"><i class="fa fa-building-o"></i> 关键词任务管理</a></li>
+						<li class="active"><a href="#" data-toggle="tab">添加任务</a></li>
+						<!--<li><a href="{:url('user/guanjianci/piliangadd')}">批量添加任务</a></li>-->
+					</ul>
+					<form action="{:url('user/guanjianci/addPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+					<div class="tab-content">
+						<div class="tab-pane active" id="one">
+							<br>
+							<table class="table table-bordered">
+								<tr>
+									<th width="120">搜索引擎</th>
+									<td>
+										<select name="post_type" id="post_type" class="form-control">
+											<option value="1">百度</option>
+											<option value="2">搜狗</option>
+											<option value="3">360</option>
+										</select>
+
+									</td>
+								</tr>
+								<tr>
+									<th>关键词</th>
+									<td>
+										<input class="form-control" style="width:300px;display:inline;" type="text" name="post_title" id="post_title" value="" placeholder="请输入关键词" required><button id="bt_get_list" style="width:60px;display:inline;margin-left:10px;" class="form-control">列表</button>
+									</td>
+								</tr>
+								<tr>
+									<th>指数</th>
+									<td>
+										<a id="bt_zhishu" style="width:60px;display:inline;margin-left:10px;text-decoration: none;" class="form-control" href="javascript:void(0);">查询</a><span id="zhishu"></span>
+									</td>
+								</tr>
+								<tr>
+									<th width="100">网址</th>
+									<td><input class="form-control" type="text" name="post_url" id="post_url" value="" required readonly></td>
+								</tr>
+								<tr>
+									<th>网站标题</th>
+									<td><input class="form-control" type="text" name="post_biaoti" id="post_biaoti" value="" required readonly></td>
+								</tr>
+								<tr>
+									<th>当前排名</th>
+									<td>
+										<input class="form-control" type="text" name="post_chushipaiming" id="post_chushipaiming" value="" required style="width:50px;display:inline;" readonly><a id="bt_paiming" style="width:60px;display:inline;margin-left:10px;text-decoration: none;" class="form-control" href="javascript:void(0);">查询</a><span id="paiming"></span>
+									</td>
+								</tr>
+								<tr>
+									<th>每日执行次数</th>
+									<td>
+										<input class="form-control" type="text" name="post_dianjicishu" id="post_dianjicishu" value="" required style="width:50px;">
+									</td>
+								</tr>
+
+
+								<tr>
+									<th>时间模板</th>
+									<td><select id="sel_time_type" class="inputtext form-control">
+										<option value="3">智能分配—平均分配</option>
+										<option value="2">智能分配—集中白天</option>
+										<option value="4">智能分配—集中夜晚</option>
+										<!--<option value="1">手动分配</option>-->
+									</select></td>
+								</tr>
+								<tr style="display:none">
+									<th>
+										分时设置
+									</th>
+									<td id="td_time">
+										00点<input name="txt_time0" type="text" value="0" id="txt_time0" class="inputtext" style="width:40px;" />次&nbsp;
+										01点<input name="txt_time1" type="text" value="0" id="txt_time1" class="inputtext" style="width:40px;" />次&nbsp;
+										02点<input name="txt_time2" type="text" value="0" id="txt_time2" class="inputtext" style="width:40px;" />次&nbsp;
+										03点<input name="txt_time3" type="text" value="0" id="txt_time3" class="inputtext" style="width:40px;" />次&nbsp;
+										04点<input name="txt_time4" type="text" value="0" id="txt_time4" class="inputtext" style="width:40px;" />次&nbsp;
+										05点<input name="txt_time5" type="text" value="0" id="txt_time5" class="inputtext" style="width:40px;" />次&nbsp;<br />
+										06点<input name="txt_time6" type="text" value="0" id="txt_time6" class="inputtext" style="width:40px;" />次&nbsp;
+										07点<input name="txt_time7" type="text" value="0" id="txt_time7" class="inputtext" style="width:40px;" />次&nbsp;
+										08点<input name="txt_time8" type="text" value="0" id="txt_time8" class="inputtext" style="width:40px;" />次&nbsp;
+										09点<input name="txt_time9" type="text" value="0" id="txt_time9" class="inputtext" style="width:40px;" />次&nbsp;
+										10点<input name="txt_time10" type="text" value="0" id="txt_time10" class="inputtext" style="width:40px;" />次&nbsp;
+										11点<input name="txt_time11" type="text" value="0" id="txt_time11" class="inputtext" style="width:40px;" />次&nbsp;<br />
+										12点<input name="txt_time12" type="text" value="0" id="txt_time12" class="inputtext" style="width:40px;" />次&nbsp;
+										13点<input name="txt_time13" type="text" value="0" id="txt_time13" class="inputtext" style="width:40px;" />次&nbsp;
+										14点<input name="txt_time14" type="text" value="0" id="txt_time14" class="inputtext" style="width:40px;" />次&nbsp;
+										15点<input name="txt_time15" type="text" value="0" id="txt_time15" class="inputtext" style="width:40px;" />次&nbsp;
+										16点<input name="txt_time16" type="text" value="0" id="txt_time16" class="inputtext" style="width:40px;" />次&nbsp;
+										17点<input name="txt_time17" type="text" value="0" id="txt_time17" class="inputtext" style="width:40px;" />次&nbsp;<br />
+										18点<input name="txt_time18" type="text" value="0" id="txt_time18" class="inputtext" style="width:40px;" />次&nbsp;
+										19点<input name="txt_time19" type="text" value="0" id="txt_time19" class="inputtext" style="width:40px;" />次&nbsp;
+										20点<input name="txt_time20" type="text" value="0" id="txt_time20" class="inputtext" style="width:40px;" />次&nbsp;
+										21点<input name="txt_time21" type="text" value="0" id="txt_time21" class="inputtext" style="width:40px;" />次&nbsp;
+										22点<input name="txt_time22" type="text" value="0" id="txt_time22" class="inputtext" style="width:40px;" />次&nbsp;
+										23点<input name="txt_time23" type="text" value="0" id="txt_time23" class="inputtext" style="width:40px;" />次&nbsp;
+									</td>
+								</tr>
+
+								<tr>
+									<th>持续天数</th>
+									<td><input class="form-control" type="text" name="post_tianshu" id="post_tianshu" value="" style="width:100px;" placeholder="请输入持续天数" required></td>
+								</tr>
+
+							</table>
+						</div>
+					</div>
+						<div id="div_list" style="border-style: solid; border-width: 1px; border-color: Gray;position: absolute; top: 60px; left: 6px; width: 790px;height: 450px; display: none;background:#333;">
+							<div style="width: 100%; height: 410px; overflow-x: hidden; overflow-y: auto;">
+								<table class="tb">
+									<tr id="tr_head">
+										<!--<th>-->
+											<!--排名-->
+										<!--</th>-->
+										<th>
+											标题
+										</th>
+										<th>
+											url
+										</th>
+									</tr>
+
+								</table>
+								<div id="div_load" style="width: 100%; text-align: center; padding-top: 180px; display: none">
+									加载中</div>
+							</div>
+							<div style="text-align: center; padding-top: 10px">
+								<a id="qd" href="javascript:void(0);">确定</a>
+								<a id="qx" href="javascript:void(0);">取消</a>
+							</div>
+						</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" id="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+							<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<include file="public@footer" />
+	</div>
+<!-- /container -->
+<include file="public@scripts" />
+<script type="text/javascript">
+	$(function(){
+	    $('#bt_zhishu').click(function(){
+            var post_title=$('#post_title').val();
+            if(post_title!='') {
+                $("#zhishu").html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+                $.get("/user/guanjianci/zhishu/post_title/" + post_title, function (data) {
+                    $("#zhishu").html(data);
+                });
+            }else{
+				alert('请填写关键词');
+				return false;
+			}
+		});
+        $('#bt_paiming').click(function(){
+            var post_title=$('#post_title').val();
+            var post_url=$('#post_url').val();
+            var post_type=$('#post_type').val();
+            if(post_title=='') {
+                alert('请填写关键词');
+                return false;
+            }
+            if(post_url=='') {
+                alert('请填写网址');
+                return false;
+            }
+
+			$("#paiming").html("<img src='__STATIC__/images/loading.gif' width='20' height='20' />");
+			$.get("/user/guanjianci/paiming/post_title/" + post_title + "/post_url/" + post_url + "/ssyq/" + post_type + "/sj/" + Math.random(), function (data) {
+			    console.log(data.indexOf('未查询到'));
+			    if(data.indexOf('未查询到')>=0){
+                    $("#paiming").html('未查询到');
+				}else if(data.indexOf('查询超时')>=0) {
+                    $("#paiming").html('查询超时');
+                } else {
+                    $("#post_chushipaiming").val(data);
+                    $("#paiming").html('');
+                }
+			});
+
+        });
+        $('#post_type').change(function(){
+            $('#post_biaoti').val('');
+            $('#post_url').val('');
+            $('#post_chushipaiming').val('');
+		});
+	    $('#bt_get_list').click(function(){
+            var search_type = $("#post_type").val();
+            if (search_type == "1" || search_type == "2" || search_type == "3") {
+
+                var dizhi = "";
+                switch (search_type) {
+                    case "1": dizhi = "/user/guanjianci/listbaidu/"; break;
+                    case "2": dizhi = "/user/guanjianci/listsogou/"; break;
+                    case "3": dizhi = "/user/guanjianci/listso/"; break;
+                }
+
+                var key_word = $("#post_title").val();
+                if(key_word==''){
+                    alert('请填写关键词');
+                    return false;
+				}
+                key_word = encodeURI(key_word);
+                if ($.trim(key_word) != "") {
+                    $("#div_list").css("display", "");
+                    $("#div_load").css("display", "");
+                    $("#tr_head").siblings().remove();
+                    $.ajax({
+                        url: dizhi,
+                        type: "Get",
+                        data: "post_title=" + key_word + "&random=" + Math.random(),
+                        dataType: "json",
+                        success: function (data) {
+
+                            $("#div_load").css("display", "none");
+
+                            var txt = "";
+                            for (var i = 0; i < data.length; i++) {
+                                var data_url=data[i].url;
+                                var data_url_arr=data_url.split("/");
+                                var url_ok='';
+                                var url_ok_data,url_ok_arr,url_so,url_so_arr;
+                                if(data_url_arr.length>3){
+									url_ok = data_url_arr[2];
+								}else{
+                                    url_ok_data = data_url_arr[0];
+                                    url_ok_arr=url_ok_data.split(" - ");
+                                    if(url_ok_arr.length>1) {
+                                        url_ok = url_ok_arr[1];
+                                    }else {
+                                        url_ok = url_ok_data;
+                                    }
+                                    console.log(url_ok);
+                                	url_so_arr=url_ok.split("&gt;");
+
+                                    if(url_so_arr.length>1){
+                                        url_ok=url_so_arr[0];
+									}
+								}
+                                txt += "<tr class=\"tr_sel\"><!--<td align=\"center\">" + (i + 1) + "</td>--><td>" + data[i].title + "</td><td>" + url_ok + "</td></tr>";
+                            }
+                            $("#tr_head").after(txt);
+                            $(".tr_sel").click(function () {
+                                    $(".tr_sel").css("background-color", "");
+                                    $(this).css("background-color", "Gray");
+
+                                    var tds = $(this).find("td");
+
+//                                    paiming=$(tds[0]).text();
+                                    title = $(tds[0]).text();
+                                    url = $(tds[1]).text();
+                                }
+                            );
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(XMLHttpRequest);
+                            alert(textStatus);
+                            alert(errorThrown);
+                        }
+                    });
+                }
+                else {
+                    alert("请填写关键词！");
+                    return false;
+                }
+            }
+            else {
+                alert("此功能目前仅支持百度、360、搜狗搜索，请手工查询！");
+                return false;
+            }
+		});
+	    $('#qd').click(function(){
+			if (title != "") {
+//				$("#post_chushipaiming").val(paiming);
+				$("#post_url").val(url);
+				$("#post_biaoti").val(title);
+				$("#div_list").css("display", "none");
+			}
+			else {
+				alert("请选择一个标题和地址！");
+				return false;
+			}
+		});
+	    $('#qx').click(function(){
+            $("#div_list").css("display", "none");
+		});
+        $("#post_dianjicishu").keyup(function () {
+            var v = $(this).val();
+            if (!isNumber(v)) {
+                $(this).val("");
+            }
+        });
+        $("#post_dianjicishu").keyup(function(){
+            var all = $("#post_dianjicishu").val();
+
+			if (all == "") {
+				alert("请填写每日执行次数！");
+				$("#sel_time_type").val(2);
+				return false;
+			}
+			if (all <= 24) {
+				for (var i = 0; i < all; i++) {
+					$("#txt_time" + i).val(1);
+				}
+			}
+			else {
+				var pj = parseInt(all / 24);
+				for (var i = 0; i < 24; i++) {
+					$("#txt_time" + i).val(pj);
+				}
+				var shengyu = all - pj * 24;
+				for (var i = 0; i < shengyu; i++) {
+					var current_val = $("#txt_time" + i).val();
+					$("#txt_time" + i).val(parseInt(current_val) + 1);
+				}
+			}
+
+		});
+        $('#submit').click(function(){
+            var day_click = $("#post_dianjicishu").val();
+            var days = $("#post_tianshu").val();
+
+            if (!isNumber(day_click)) {
+                alert("每日执行次数必须为正整数！");
+                return false;
+            }
+            if (!isNumber(days)) {
+                alert("持续天数必须为正整数！");
+                return false;
+            }
+
+            var input_times = $("#td_time").find("input");
+            var score_total = 0;
+            for (var i = 0; i < input_times.length; i++) {
+                var n = $(input_times[i]).val();
+                if (n == "") {
+                    //n = 0;
+                    alert("时段点击次数不能为空！");
+                    return false;
+                }
+                score_total += parseInt(n);
+            }
+
+            if (day_click != score_total) {
+                alert("每日执行次数与各时段之和不相等！你设置的每日执行次数为：" + day_click + "，各时段之和为：" + score_total + "");
+                return false;
+            }
+
+            //判断积分是否足够
+            var score_my = {$myscore};
+
+            var score_need = day_click * days * {$jiage};
+
+            if (parseInt(score_my) < parseInt(score_need)) {
+                alert("对不起，你的米币不足！您的米币：" + score_my + "，所需米币：" + score_need + "");
+                return false;
+            }
+            //
+
+            //提醒是否确认
+            var is_add = confirm("本次任务将扣除" + score_need + "米币，是否确认添加？");
+            if (!is_add) {
+                return false;
+            }
+            //
+
+            return true;
+		});
+		$('#sel_time_type').change(function(){
+            $("#td_time").find("input").val(0);
+            var all = $("#post_dianjicishu").val();
+            var time_type = $("#sel_time_type").val();
+            switch (time_type) {
+                case "1": break;
+                case "2":
+                    if (all == "") {
+                        alert("请填写每日执行次数！");
+                        $("#sel_time_type").val(2);
+                        return false;
+                    }
+                    set_time_click(all, time_type);
+                    break;
+                case "3":
+                    if (all == "") {
+                        alert("请填写每日执行次数！");
+                        $("#sel_time_type").val(2);
+                        return false;
+                    }
+                    if (all <= 24) {
+                        for (var i = 0; i < all; i++) {
+                            $("#txt_time" + i).val(1);
+                        }
+                    }
+                    else {
+                        var pj = parseInt(all / 24);
+                        for (var i = 0; i < 24; i++) {
+                            $("#txt_time" + i).val(pj);
+                        }
+                        var shengyu = all - pj * 24;
+                        for (var i = 0; i < shengyu; i++) {
+                            var current_val = $("#txt_time" + i).val();
+                            $("#txt_time" + i).val(parseInt(current_val) + 1);
+                        }
+                    }
+                    break;
+                case "4":
+                    if (all == "") {
+                        alert("请填写每日执行次数！");
+                        $("#sel_time_type").val(2);
+                        return false;
+                    }
+                    set_time_click(all, time_type);
+                    break;
+            }
+		});
+        for (var i = 0; i < 24; i++) {
+            $("#txt_time" + i).keyup(function () {
+                var v = $(this).val();
+                if (!isNumber_and0(v)) {
+                    $(this).val("");
+                }
+            });
+            $("#txt_time" + i).blur(function () {
+                var v = $(this).val();
+                if (!isNumber_and0(v)) {
+                    $(this).val("");
+                }
+            });
+            $("#txt_time" + i).bind("cut copy paste", function (e) {
+                e.preventDefault();
+            });
+        }
+	});
+    function isNumber(s) {
+        var type = "^[0-9]*[1-9][0-9]*$";
+        var re = new RegExp(type);
+        if (s.match(re) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function isNumber_and0(s) {
+        if (s == "0") {
+            return true;
+        }
+        var type = "^[0-9]*[1-9][0-9]*$";
+        var re = new RegExp(type);
+        if (s.match(re) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function set_time_click(all, type) {
+        var day;
+        var night;
+        if (type == "2") {
+            day = all * 0.7;
+            night = all * 0.3;
+        }
+        else if (type == "4") {
+            day = all * 0.3;
+            night = all * 0.7;
+        }
+        else {
+
+        }
+        if ((day - night).toString().indexOf('.') == -1) {
+            day = parseInt(day);
+            night = parseInt(night);
+        }
+        else {
+            day = day.toFixed(); day = parseInt(day);
+            night = night.toFixed(); night = parseInt(night);
+        }
+        //设置白天
+        var pj_13 = parseInt(day / 13);
+        if (pj_13 == 0) {
+            for (var i = 8; i < 8 + day; i++) {
+                $("#txt_time" + i).val(1);
+            }
+        }
+        else {
+            for (var i = 8; i <= 20; i++) {
+                $("#txt_time" + i).val(pj_13);
+            }
+            var shengyu = day - pj_13 * 13;
+            for (var i = 8; i < 8 + shengyu; i++) {
+                var current_val = $("#txt_time" + i).val();
+                $("#txt_time" + i).val(parseInt(current_val) + 1);
+            }
+        }
+        //设置夜晚
+        var pj_11 = parseInt(night / 11);
+        if (pj_11 == 0) {
+            for (var i = 21; i < 21 + night; i++) {
+                var index = i;
+                if (index > 23) {
+                    index = index - 24;
+                }
+                $("#txt_time" + index).val(1);
+            }
+        }
+        else {
+            for (var i = 21; i <= 32; i++) {
+                var index = i;
+                if (index > 23) {
+                    index = index - 24;
+                }
+                $("#txt_time" + index).val(pj_11);
+            }
+            var shengyu = night - pj_11 * 11;
+            for (var i = 21; i < 21 + shengyu; i++) {
+                var index = i;
+                if (index > 23) {
+                    index = index - 24;
+                }
+                var current_val = $("#txt_time" + index).val();
+                $("#txt_time" + index).val(parseInt(current_val) + 1);
+            }
+        }
+    }
+</script>
+</body>
+</html>
